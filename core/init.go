@@ -18,21 +18,24 @@ func InitServer(configFilePath string) {
 
 	// New dispatcher without ClientBundle, ClientBundle must be initiated when server is running
 	d := outbound.Dispatcher{
-		PrimaryDNS:         config.PrimaryDNS,
-		AlternativeDNS:     config.AlternativeDNS,
-		OnlyPrimaryDNS:     config.OnlyPrimaryDNS,
-		IPNetworkList:      config.IPNetworkList,
-		DomainList:         config.DomainList,
-		DomainWhiteList:    config.DomainWhiteList,
-		RedirectIPv6Record: config.RedirectIPv6Record,
-		Hosts:              config.Hosts,
-		Cache:              config.Cache,
+		PrimaryDNS:               config.PrimaryDNS,
+		AlternativeDNS:           config.AlternativeDNS,
+		OnlyPrimaryDNS:           config.OnlyPrimaryDNS,
+		IPNetworkPrimaryList:     config.IPNetworkPrimaryList,
+		IPNetworkAlternativeList: config.IPNetworkAlternativeList,
+		DomainPrimaryList:        config.DomainPrimaryList,
+		DomainAlternativeList:    config.DomainAlternativeList,
+
+		RedirectIPv6Record: config.IPv6UseAlternativeDNS,
+		MinimumTTL:         config.MinimumTTL,
+
+		Hosts: config.Hosts,
+		Cache: config.Cache,
 	}
 
 	s := &inbound.Server{
 		BindAddress: config.BindAddress,
 		Dispatcher:  d,
-		MinimumTTL:  config.MinimumTTL,
 		RejectQtype: config.RejectQtype,
 	}
 
